@@ -16,6 +16,7 @@ namespace infini
         Tensor c = make_ref<TensorObj>(shape, DataType::Float32, runtime);
         Tensor d = make_ref<TensorObj>(shape, DataType::Float32, runtime);
         Allocator allocator = Allocator(runtime);
+
         // allocate a->b->c
         size_t offsetA = allocator.alloc(a->getBytes());
         size_t offsetB = allocator.alloc(b->getBytes());

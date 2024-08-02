@@ -34,7 +34,6 @@
 build/
 build_debug/
 .cache/
-
 .vscode/
 
 # python
