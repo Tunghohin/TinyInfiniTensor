@@ -34,6 +34,8 @@ namespace infini
         // =================================== 作业 ===================================
         if (mem_allocated.empty()) {
             mem_allocated.insert({0, size});
+            this->peak = getAlignedSize(std::max(this->peak, size));
+            this->used += size;
             return 0;
         }
 
@@ -43,6 +45,8 @@ namespace infini
             if (std::next(iter) == mem_allocated.end() || start_addr + size_cur + size <= std::next(iter)->first) {
                 allocated_addr = start_addr + size_cur;
                 mem_allocated.insert({allocated_addr, size});
+                this->peak = getAlignedSize(std::max(this->peak, allocated_addr + size - 1));
+                this->used += size;
                 break;
             }
         }
@@ -58,6 +62,7 @@ namespace infini
         // TODO: 设计一个算法来回收内存
         // =================================== 作业 ===================================
         mem_allocated.erase(addr);
+        this->used -= size;
     }
 
     void *Allocator::getPtr()
