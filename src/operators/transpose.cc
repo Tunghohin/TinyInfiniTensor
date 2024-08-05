@@ -26,15 +26,19 @@ namespace infini
     {
         const auto A = inputs[0];
         auto input_dim = A->getDims();
-        auto output_dim = input_dim;
         int rank = A->getRank();
-
         // =================================== 作业 ===================================
         // TODO：修改 output_dim，返回正确的 transpose 后的 shape
         // REF: https://onnx.ai/onnx/operators/onnx__Transpose.html#transpose-21
         // =================================== 作业 ===================================
+        auto perm = this->getPermute();
+        auto output_dim = std::vector<ShapeElem>(rank);
+        for (size_t i = 0; i < input_dim.size(); i++) {
+            output_dim[i] = input_dim[perm[i]];
+        }
 
-        return {{}};
+
+        return {{output_dim}};
     }
 
     std::string TransposeObj::toString() const
