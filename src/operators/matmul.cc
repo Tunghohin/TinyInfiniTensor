@@ -1,3 +1,4 @@
+#include <utils/operator_utils.h>
 #include "operators/matmul.h"
 
 namespace infini
@@ -27,7 +28,11 @@ namespace infini
         // TODO：返回经过 matmul 操作后的 shape
         // REF: https://github.com/onnx/onnx/blob/main/docs/Operators.md#gemm
         // =================================== 作业 ===================================
-        return {{}};
+        auto output = infer_broadcast(inputs[0]->getDims(), inputs[1]->getDims());
+        auto last = output.size() - 1;
+        output[last] = inputs[1]->getDims()[this->transB? last - 1: last];
+        output[last - 1] = inputs[0]->getDims()[this->transA? last : last - 1];
+        return {{output}};
     }
 
 } // namespace infini
