@@ -4,6 +4,7 @@
 #include <memory>
 #include <type_traits>
 
+
 namespace infini {
 
 template <typename T> using Ref = std::shared_ptr<T>;
