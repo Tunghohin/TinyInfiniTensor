@@ -2,6 +2,8 @@
 #include "core/allocator.h"
 #include "core/operator.h"
 #include "core/tensor.h"
+#include "operators/transpose.h"
+#include "operators/matmul.h"
 
 namespace infini
 {
