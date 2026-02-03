@@ -1,6 +1,7 @@
 #pragma once
 #include "utils/exception.h"
 #include <cassert>
+#include <cstdint>
 #include <functional>
 #include <iostream>
 #include <list>
@@ -37,11 +38,11 @@ using std::vector;
 
 // Assert: conditions should have no side effect
 #define _IT_ASSERT_2(condition, info)                                          \
-    static_cast<bool>(condition)                                               \
-        ? void(0)                                                              \
-        : throw ::infini::Exception(                                           \
-              std::string("[") + __FILE__ + ":" + std::to_string(__LINE__) +   \
-              "] Assertion failed (" + #condition + "): " + info)
+  static_cast<bool>(condition)                                                 \
+      ? void(0)                                                                \
+      : throw ::infini::Exception(                                             \
+            std::string("[") + __FILE__ + ":" + std::to_string(__LINE__) +     \
+            "] Assertion failed (" + #condition + "): " + info)
 #define _IT_ASSERT_1(condition) _IT_ASSERT_2(condition, "")
 #define IT_ASSERT(...) _VA_SELECT(_IT_ASSERT, __VA_ARGS__)
 
@@ -52,34 +53,34 @@ using std::vector;
 
 // std::to_underlying is avaiable since C++23
 template <typename T> auto enum_to_underlying(T e) {
-    return static_cast<std::underlying_type_t<T>>(e);
+  return static_cast<std::underlying_type_t<T>>(e);
 }
 
 template <typename T> std::string vecToString(const std::vector<T> &vec) {
-    std::stringstream ss;
-    ss << "[";
-    for (size_t i = 0; i < vec.size(); ++i) {
-        ss << vec.at(i);
-        if (i < vec.size() - 1) {
-            ss << ",";
-        }
+  std::stringstream ss;
+  ss << "[";
+  for (size_t i = 0; i < vec.size(); ++i) {
+    ss << vec.at(i);
+    if (i < vec.size() - 1) {
+      ss << ",";
     }
-    ss << "]";
-    return ss.str();
+  }
+  ss << "]";
+  return ss.str();
 }
 
 template <typename T> std::string vecToString(const T *st, size_t length) {
-    std::stringstream ss;
-    ss << "[";
-    size_t i = 0;
-    for (i = 0; i < length; i++) {
-        ss << *(st + i);
-        if (i < length - 1) {
-            ss << ",";
-        }
+  std::stringstream ss;
+  ss << "[";
+  size_t i = 0;
+  for (i = 0; i < length; i++) {
+    ss << *(st + i);
+    if (i < length - 1) {
+      ss << ",";
     }
-    ss << "]";
-    return ss.str();
+  }
+  ss << "]";
+  return ss.str();
 }
 
 } // namespace infini
